@@ -248,7 +248,7 @@ STACK 100H
 
 DATASEG
 
-SPACE   DB      " $"
+
 
 UDATASEG
 
