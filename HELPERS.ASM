@@ -5,7 +5,6 @@ ASSUME CS:_TEXT,DS:FLAT,ES:FLAT,FS:FLAT,GS:FLAT
 
 INCLUDE "HELPERS.INC"
 
-VIDEO EQU 640*1024
 
 CODESEG
 
@@ -13,7 +12,7 @@ CODESEG
 PROC CLEARSCREEN
         USES    EAX, ECX, EDI
 
-        MOV     EDI, VIDEO
+        MOV     EDI, 640*1024
         MOV     ECX, 16000
         MOV     EAX, 0
         REP     STOSD
@@ -157,7 +156,7 @@ PROC COPYBUFFER
         USES   EBX, ECX, ESI, EDI
 
         LEA     ESI, [BUFFER]
-        MOV     EDI, VIDEO
+        MOV     EDI, 640*1024
         MOV     ECX, 16000
         REP     MOVSD
         RET
