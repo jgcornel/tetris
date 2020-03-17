@@ -120,7 +120,7 @@ PROC REMOVELINES
 ENDP REMOVELINES
 
 
-PROC MAYBEBUMPLEVEL
+PROC HANDLELEVEL
         USES    EAX
 
         MOV     EAX, [LEVEL]
@@ -142,7 +142,7 @@ PROC MAYBEBUMPLEVEL
         LEA     EAX, [LEVELSTR + 7]
         CALL    ITODECSTR, EAX, [LEVEL]
         RET
-ENDP MAYBEBUMPLEVEL
+ENDP HANDLELEVEL
 
 
 PROC SPAWNTETRO
@@ -161,7 +161,7 @@ PROC SPAWNTETRO
 ENDP SPAWNTETRO
 
 
-PROC TRYMOVE
+PROC MOVE
         ARG     @@DCOL:DWORD, @@DROW:DWORD, @@DROT:DWORD
         USES    EAX, EBX
 
@@ -182,10 +182,10 @@ PROC TRYMOVE
         JNE     @@L2
         CALL    FREEZETETRO
         CALL    REMOVELINES
-        CALL    MAYBEBUMPLEVEL
+        CALL    HANDLELEVEL
         CALL    SPAWNTETRO
 @@L2:   RET
-ENDP TRYMOVE
+ENDP MOVE
 
 
 MACRO UPDATESCREEN
@@ -214,19 +214,19 @@ ENDM INITGAME
 
 
 MACRO GODOWN
-        CALL    TRYMOVE, 0, 1, 0
+        CALL    MOVE, 0, 1, 0
 ENDM GODOWN
 
 MACRO GOLEFT
-        CALL    TRYMOVE, -1, 0, 0
+        CALL    MOVE, -1, 0, 0
 ENDM GOLEFT
         
 MACRO GORIGHT
-        CALL    TRYMOVE, 1, 0, 0
+        CALL    MOVE, 1, 0, 0
 ENDM GORIGHT
 
 MACRO ROTATE
-        CALL    TRYMOVE, 0, 0, 1
+        CALL    MOVE, 0, 0, 1
 ENDM ROTATE
 
 
@@ -281,40 +281,37 @@ STACK 100H
 
 DATASEG
 
-CODES   DW      0660H, 0660H, 0660H, 0660H
-        DW      0F00H, 2222H, 0F00H, 2222H
-        DW      0360H, 2310H, 0360H, 2310H
-        DW      0630H, 1320H, 0630H, 1320H
-        DW      0740H, 2230H, 1700H, 6220H
-        DW      0710H, 3220H, 4700H, 2260H
-        DW      0720H, 2320H, 2700H, 2620H
-        DW      0750H, 0323H, 5700H, 6260H
-TETRO   DB      0
-        DB      0
-LOC     DB      6
-        DB      0
-TICS    DW      TIMER_PERIOD
-PERIOD  DW      TIMER_PERIOD
 
-KEYS    DB      01H, 50H, 48H, 4BH, 4DH, 00H
-LABELS  DD      REPEAT, RIGHT, LEFT, ROT, DOWN, EXIT
-DEAD    DD      0
-
-COLORS  DB      08H, 09H, 0AH, 0BH, 0CH, 0DH, 0EH, 0FH
-
-SCORE       DD  0
-LEVEL       DD  1
-LINES       DD  0    
-
-SCORESTR    DB  "SCORE: 0", 32 DUP('$')
-LEVELSTR    DB  "LEVEL: 1", 32 DUP('$')
-LINESSTR    DB  "LINES: 0", 32 DUP('$')
-
-MESSAGE     DB  "YOU LOST!", 13, 10
-            DB  "PRESS ESC TO EXIT", 13, 10
-            DB  "PRESS N+N TO CONTINUE$"
+CODES       DW      0660H, 0660H, 0660H, 0660H
+            DW      0F00H, 2222H, 0F00H, 2222H
+            DW      0360H, 2310H, 0360H, 2310H
+            DW      0630H, 1320H, 0630H, 1320H
+            DW      0740H, 2230H, 1700H, 6220H
+            DW      0710H, 3220H, 4700H, 2260H
+            DW      0720H, 2320H, 2700H, 2620H
+            DW      0750H, 0323H, 5700H, 6260H
+TETRO       DB      0
+            DB      0
+LOC         DB      6
+            DB      0
+TICS        DW      TIMER_PERIOD
+PERIOD      DW      TIMER_PERIOD
+KEYS        DB      01H, 50H, 48H, 4BH, 4DH, 00H
+LABELS      DD      REPEAT, RIGHT, LEFT, ROT, DOWN, EXIT
+DEAD        DD      0
+COLORS      DB      08H, 09H, 0AH, 0BH, 0CH, 0DH, 0EH, 0FH
+SCORE       DD      0
+LEVEL       DD      1
+LINES       DD      0    
+SCORESTR    DB      "SCORE: 0", 32 DUP('$')
+LEVELSTR    DB      "LEVEL: 1", 32 DUP('$')
+LINESSTR    DB      "LINES: 0", 32 DUP('$')
+MESSAGE     DB      "YOU LOST!", 13, 10
+            DB      "PRESS ESC TO EXIT", 13, 10
+            DB      "PRESS N+N TO CONTINUE$"
 
 UDATASEG
+
 
 BOARD   DW      25 DUP(?)
 STRING  DB      33 DUP(?)

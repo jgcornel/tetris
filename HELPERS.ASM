@@ -210,17 +210,17 @@ PROC ITODECSTR
         NEG     EAX
         MOV     [BYTE PTR EDI], '-'
         INC     EDI
-@@L1:   XOR EDX, EDX
-        DIV EBX
-        INC ECX
-        PUSH DX
-        TEST EAX, EAX
-        JNZ @@L1
-@@L2:   POP AX
-        ADD AX, '0'
+@@L1:   XOR     EDX, EDX
+        DIV     EBX
+        INC     ECX
+        PUSH    DX
+        TEST    EAX, EAX
+        JNZ     @@L1
+@@L2:   POP     AX
+        ADD     AX, '0'
         STOSB
-        LOOP @@L2
-        MOV [BYTE PTR EDI], '$'
+        LOOP    @@L2
+        MOV     [BYTE PTR EDI], '$'
         RET
 ENDP ITODECSTR
 
@@ -248,12 +248,13 @@ STACK 100H
 
 DATASEG
 
+
 UDATASEG
+
 
 STRIPES DB      16  * 32  DUP(?)
 BUFFER  DB      200 * 320 DUP(?)
 STRING  DB      33 DUP(?)
-
 RSEED   DD      ?
 
 
