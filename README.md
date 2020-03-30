@@ -12,14 +12,16 @@ either empty or occupied, such a grid can be represented by a 16 bit word. The
 following image shows the codes and their interpretation for the four rotations
 of the L-tetromino:
 
+![Four rotations of the L-tetromino](https://github.com/jgcornel/tetris/blob/master/img/l-tetro.svg)
+
 This explains the `PAINTTETRO` procedure, which given an address to a grid
 location and a 16 bit word draws the corresponding tetromino at the appropriate
 location.
 
 `PAINTTETRO` calls `PAINTCELL`, a procedure that draws a rectangle filled with
-the appropriate color `@@COLOR` at the appropriate location `@@Y, @@X` in the
-grid. Note that this procedure avoids multiplication by 256 using the following
-identity:
+the appropriate color `@@COLOR` at the appropriate location `(@@Y,@@X)` in the
+grid. Note that this procedure avoids multiplication by 256 by using the
+following identity:
 
 ```
 x * 320 == x * (256 + 64) == x * 256 + x * 64 == x << 8 + x << 6
