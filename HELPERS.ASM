@@ -46,7 +46,7 @@ ENDP WAITFORSYNC
 
 
 PROC GENERATESTRIPES
-        ARG     @@COLOUR:BYTE
+        ARG     @@COLOR:BYTE
         USES    EAX, ECX, EDX, EDI
 
         XOR     DL, DL
@@ -55,7 +55,7 @@ PROC GENERATESTRIPES
 @@L2:   MOV     AL, 0
         TEST    DL, DH
         JZ      @@L3
-        MOV     AL, [@@COLOUR]
+        MOV     AL, [@@COLOR]
 @@L3:   MOV     ECX, 8
         REP     STOSB
         SHR     DH, 1
